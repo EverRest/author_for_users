@@ -1,5 +1,5 @@
 <?php
-
+include_once 'Config.php';
 /**
  * Created by PhpStorm.
  * User: Pavlo
@@ -8,14 +8,25 @@
  */
 class Db
 {
-    private $host      = "localhost";
-    private $user      = "root";
-    private $pass      = "";
-    private $dbname    = "zinit_db";
+    private $host;
+    private $user;
+    private $pass;
+    private $dbname;
     public $dbh;
     private $error;
 
     public function __construct(){
+        /**
+         * Set configuration for database connection
+         */
+        $config = new Config();
+        $this->host = $config->getHost();
+        $this->user = $config->getUser();
+        $this->pass = $config->getPassword();
+        $this->dbname = $config->getDatabase();
+        /**
+         * Create PDO connection
+         */
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
         $options = array(
             PDO::ATTR_PERSISTENT    => true,
@@ -43,6 +54,9 @@ class Db
         }
     }
 
+    /**
+     * Close database connection
+     */
     public function close () {
         $this->dbh = NULL;
     }

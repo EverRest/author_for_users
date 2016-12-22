@@ -51,7 +51,7 @@ class User
     }
     public function is_loggedin()
     {
-        if(isset($_COOKIE["user_info"]))
+        if(isset($_COOKIE["user_id"]) AND !empty($_COOKIE["user_id"]))
         {
             return true;
         }
@@ -86,10 +86,10 @@ class User
         $this->pdo->close();
         return true;
     }
-    public function login($umail,$upass)
+    public function login($umail,$upass, $count_errors)
     {
-        if ( $count_errors = $_COOKIE["count_errors"] < 2 )
-        {
+//        if ( $count_errors = $_COOKIE["count_errors"] < 2 )
+//        {
             try {
                 $stmt = $this->pdo->dbh->prepare("SELECT * FROM users WHERE email=:umail LIMIT 1");
                 $stmt->execute(array(":umail" => $umail));
@@ -107,15 +107,15 @@ class User
                         return json_encode($userRow, JSON_FORCE_OBJECT);
                     } else {
                         $count_errors++;
-                        setcookie("count_errors", $count_errors, time() + 180, "/");
-                        return false;
+//                        setcookie("count_errors", $count_errors, time() + 180, "/");
+                        return $count_errors;
                     }
                 }
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
-        } else {
-            die("You've been blocked for wrong input!");
-        }
+//        } else {
+//            die("You've been blocked for wrong input!");
+//        }
     }
 }

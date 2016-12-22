@@ -5,16 +5,19 @@
  * Date: 21.12.2016
  * Time: 22:48
  */
-//include_once 'classes/User.php';
+
+/**
+ * Creating admin user
+ */
+
 session_start();
-if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    setcookie('count_errors', 0, time() + 180);
-    setcookie('ip', $ip, time() + 180);
-}
+include_once 'classes/User.php';
 //$admin = new User();
 //$admin_password = md5('admin');
 //$admin->addUser('admin@test.ua','21232f297a57a5a743894a0e4a801fc3');
+
+include_once "scripts/php/init.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +35,14 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
             margin: 0 auto;
             display: block;
         }
+
         form {
             padding: 25px 10px;
             border-radius: 10px;
+        }
+
+        form, .welcome {
+            display: none;
         }
     </style>
     <!--[if lt IE 9]>
@@ -46,14 +54,14 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
 <div class="container">
     <div class="row">
         <?echo '<pre>';print_r($_COOKIE);echo '</pre>';?>
-        <? if(!empty($_COOKIE["user_id"]) AND !empty($_COOKIE["last_visit"])): ?>
+<!--        --><?// if(!empty($_COOKIE["user_id"]) AND !empty($_COOKIE["last_visit"])): ?>
         <div class="col-md-3 col-md-offset-6 bg-success welcome">
             <h1>Hello User!</h1>
-            <h2>Your id is <?php echo $_COOKIE["user_id"]; ?></h2>
-            <p>Last visit: <?php echo $_COOKIE["last_visit"] ?><p>
+            <h2>Your id is <span></span></h2>
+            <p>Last visit: <span></span><p>
             <button id="logout-btn" class="btn btn-lg btn-info">Log Out</button>
         </div>
-        <? else: ?>
+<!--        --><?// else: ?>
         <form id="login-form" action="#" class="col-md-8 col-md-offset-2 bg-primary" method="POST">
             <h1>Login Form</h1>
             <hr>
@@ -74,7 +82,7 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
             <br>
             <button type="submit" disabled="true" class="text-uppercase btn btn-lg btn-success btnSubmit">Submit</button>
         </form>
-        <? endif; ?>
+<!--        --><?// endif; ?>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -83,6 +91,7 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
 <script src="lib/PuzzleCAPTCHA.js/puzzleCAPTCHA.js"></script>
 <script>
     $(function() {
+        checkingUser();
         var logout_btn =$("#logout-btn");
         var login_form = $("#login-form");
         $("#PuzzleCaptcha").PuzzleCAPTCHA({
@@ -115,25 +124,43 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
             },
             submitHandler: function() {
                 var user_data = grabData();
-                ajaxLogin(user_data);
+                if(ajaxLogin(user_data) == false) {
+
+                }
             }
         });
     });
+
     function grabData() {
         var email = $("#email").val(),
-            password = $("#password").val();
+            password = $("#password").val(),
+            cookies = getCookie('count_errors');
+        console.log(cookies);
         return {
             email: email,
-            password: password
+            password: password,
+            count_errors: cookies.count_errors
         };
     }
-    function hide() {
+
+    function getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    function hideForm() {
         $("#email").val("");
         $("#password").val("");
         setTimeout(function () {
             $(".btnSubmit").text("SENT...");
             console.log("success");
         },200);
+        toggleEl();
+    }
+
+    function toggleEl(){
         $("#login-form").fadeOut(1500);
         $(".welcome").fadeIn(500);
     }
@@ -145,11 +172,11 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
             data: "sucess",
             success: function (response) {
                 console.log(response);
-                $(".welcome").fadeOut(1000);
-                $("#login-form").fadeIn(500);
+                toggleEl();
                 }
             });
     }
+
     function ajaxLogin(user_data) {
         $.ajax({
             url: "scripts/php/login.php",
@@ -157,13 +184,34 @@ if (!isset($_COOKIE['count_errors']) AND empty($_COOKIE)) {
             data: user_data,
             success: function (response) {
                 if(response != "false") {
-                    hide();
+                    hideForm();
+                    $(".welcome").fadeIn(500);
                     console.log(response);
                 } else {
+                    $("#email").val("");
+                    $("#password").val("");
                     console.log(response);
                 }
             }
         });
+    }
+
+    function putCookiesToWelcome () {
+        var date,
+            id;
+    }
+    function checkingUser() {
+        $.get(
+            "/scripts/php/init.php",
+            onAjaxSuccess
+            );
+        function onAjaxSuccess(response) {
+            if (response != true) {
+                $("#login-form").fadeIn(200);
+            } else {
+                $(".welcome").fadeIn(200);
+            }
+        }
     }
 </script>
 </body>
