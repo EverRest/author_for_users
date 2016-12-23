@@ -33,13 +33,13 @@ include_once 'scripts/php/checking.php';
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-3 col-md-offset-6 bg-success welcome">
-            <h1>Hello User!</h1>
-            <h2>Your id is <span></span></h2>
-            <p>Last visit: <span></span><p>
-            <button id="logout-btn" class="btn btn-lg btn-info">Log Out</button>
+        <div class="col-md-3 col-md-offset-4 bg-success welcome jumbotron">
+            <h3 class="text-center">Hello User!</h3>
+            <h2 class="text-center">Your id is <span></span></h2>
+            <p class="text-center">Last visit: <span></span><p>
+            <button id="logout-btn" class="center-block btn btn-lg btn-info">Log Out</button>
         </div>
-        <form id="login-form" action="#" class="col-md-6 col-md-offset-3 bg-primary" method="POST">
+        <form id="login-form" action="#" class="col-md-4 col-md-offset-4 bg-primary" method="POST">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Email"/>
