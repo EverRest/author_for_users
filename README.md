@@ -1,10 +1,10 @@
 # author_for_users
 
-Database
+Database -
 database: zinit_db;
 user:     root;
 password: '';
 
-User
+User -
 email:    'admin@test.ua';
 password: 'admin';
