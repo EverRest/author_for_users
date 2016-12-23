@@ -37,6 +37,8 @@ function ajaxLogout() {
         data: "sucess",
         success: function (response) {
             console.log("you're log off!!!");
+            location.reload();
+
         }
     });
 }
