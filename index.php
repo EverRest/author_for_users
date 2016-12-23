@@ -56,7 +56,6 @@ include_once 'scripts/php/checking.php';
             <div class="form-group">
                 <div id="PuzzleCaptcha"></div>
             </div>
-            <br>
             <button type="submit" disabled="true" class="text-uppercase btn btn-lg btn-success btnSubmit">Submit</button>
         </form>
     </div>
