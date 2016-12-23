@@ -1,0 +1,13 @@
+button.btnSubmit {
+    margin: 0 auto;
+    display: block;
+}
+
+form {
+    padding: 25px 10px;
+    border-radius: 10px;
+}
+
+#login-form, .welcome {
+    display: none;
+}
