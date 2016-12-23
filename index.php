@@ -1,5 +1,4 @@
 <?php
-session_start();
 /**
  * Created by PhpStorm.
  * User: Pavlo
@@ -10,6 +9,10 @@ session_start();
 /**
  * Creating admin user
  */
+
+session_start();
+error_reporting(0);
+
 include_once 'scripts/php/init.php';
 include_once 'scripts/php/checking.php';
 ?>
@@ -39,7 +42,7 @@ include_once 'scripts/php/checking.php';
             <p class="text-center">Last visit: <span></span><p>
             <button id="logout-btn" class="center-block btn btn-lg btn-info">Log Out</button>
         </div>
-        <form id="login-form" action="#" class="col-md-4 col-md-offset-4 bg-primary" method="POST">
+        <form id="login-form" action="#" class="col-md-4 col-md-offset-4 bg-info" method="POST">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Email"/>
@@ -51,7 +54,7 @@ include_once 'scripts/php/checking.php';
             <div class="form-group">
                 <div id="PuzzleCaptcha"></div>
             </div>
-            <button type="submit" disabled="true" class="text-uppercase btn btn-lg btn-success btnSubmit">Submit</button>
+            <button type="submit" disabled="true" class="text-uppercase btn btn-lg btn-primary btnSubmit">Submit</button>
         </form>
     </div>
 </div>

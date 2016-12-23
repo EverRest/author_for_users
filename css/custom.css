@@ -5,8 +5,9 @@ button.btnSubmit {
 
 form {
     padding: 25px 10px;
-    margin-top: 20px;
+    margin-top: 100px;
     border-radius: 10px;
+    border: 1px solid #d2d2d2;
 }
 
 .welcome {

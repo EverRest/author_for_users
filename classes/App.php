@@ -25,9 +25,6 @@ class App
 
         if (!isset($_COOKIE['count_errors']) || empty($_COOKIE['count_errors']) || empty($_COOKIE['user_id'])) {
             $ip = $_SERVER['REMOTE_ADDR'];
-//            setcookie('last_visit', 0, 3 * 60 * 10);
-//            setcookie('user_id', 0, 3 * 60 * 10);
-//            setcookie('count_errors', 0, time() + 3 * 60 * 10);
             setcookie('ip', $ip, time() + 3 * 60 * 10);
         } elseif ( !empty($_COOKIE['id'])) {
             setcookie("login","true", 3 * 60);
@@ -41,8 +38,6 @@ class App
         if (isset($_POST) AND !empty($_POST['email']) AND !empty($_POST['password'])) {
             $user_email = strip_tags($_POST['email']);
             $user_pass = strip_tags($_POST['password']);
-//            $res = $this->app->login($user_email, $user_pass);
-//            $newuser = new User();
             $res = $this->app->login($user_email,$user_pass);
             if (!empty($res)) {
                 echo $res;
