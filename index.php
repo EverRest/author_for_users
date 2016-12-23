@@ -40,8 +40,6 @@ include_once 'scripts/php/checking.php';
             <button id="logout-btn" class="btn btn-lg btn-info">Log Out</button>
         </div>
         <form id="login-form" action="#" class="col-md-6 col-md-offset-3 bg-primary" method="POST">
-            <h1>Login Form</h1>
-            <hr>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Email"/>
@@ -49,9 +47,6 @@ include_once 'scripts/php/checking.php';
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
-            </div>
-            <div class="form-group">
-                <label class="text-uppercase">Are you a human?</label>
             </div>
             <div class="form-group">
                 <div id="PuzzleCaptcha"></div>
